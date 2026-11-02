@@ -2,7 +2,7 @@
 
 ### An AI-powered Question Answering System using Retrieval-Augmented Generation (RAG)
 
-Ask questions about your PDF documents and get context-aware answers using semantic search, vector embeddings, and a locally executed Large Language Model (LLM).
+Ask questions about PDF documents and generate context-aware answers using semantic search, vector embeddings, and a pretrained Large Language Model (LLM) running in your notebook runtime.
 
 ---
 
@@ -37,7 +37,7 @@ The primary objectives of this project are to:
 - **🧠 Semantic Embeddings:** Converts text chunks into numerical vectors using Sentence Transformers.
 - **🔍 Vector Similarity Search:** Uses FAISS to retrieve relevant document chunks.
 - **🤖 LLM-Powered Answers:** Generates responses using a pretrained instruction-tuned language model.
-- **📑 Page References:** Preserves page numbers so retrieved information can be traced back to the source document.
+- **📑 Source Page Tracking:** Keeps page numbers attached to retrieved chunks so you can trace supporting text back to the PDF. Page citations in generated answers are prompted, but are not guaranteed.
 - **💬 Interactive Q&A:** Supports multiple questions in a continuous terminal-based chat session.
 - **🛡️ Context-Grounded Responses:** Instructs the model to acknowledge when the supplied context does not contain enough information.
 - **⚡ GPU Support:** Automatically uses CUDA when available; otherwise, it runs on the CPU.
@@ -168,7 +168,7 @@ This is a pretrained, instruction-tuned language model with approximately 0.5 bi
 - Follows instructions to answer using the supplied context.
 - Is prompted to acknowledge insufficient evidence when the context does not support an answer.
 
-The model runs through Hugging Face Transformers and PyTorch.
+The model runs through Hugging Face Transformers and PyTorch in the notebook runtime; the current implementation does not call a hosted LLM API.
 
 **Note:** The language model is pretrained. This project uses inference and does not fine-tune the model.
 
@@ -200,11 +200,11 @@ The PDF is an example input, not a mandatory dependency. You can use another tex
 
 ### Option 1: Run on Google Colab (Recommended)
 
-Google Colab provides a convenient environment for running the notebook without setting up Python dependencies locally.
+Google Colab provides a convenient environment for running the notebook without installing the Python dependencies on your computer. The models are downloaded into the runtime the first time they are used.
 
 **Step 1: Open the notebook**
 
-Open the project notebook in Google Colab.
+Upload `LLM_Rag_Project.ipynb` to Google Colab, or open it from your Google Drive.
 
 **Step 2: Install dependencies**
 
@@ -228,11 +228,13 @@ Select the PDF document you want to use.
 
 **Step 4: Set the PDF path**
 
+Run this after uploading the PDF. If you upload more than one file, select the PDF filename explicitly instead of using the first uploaded filename.
+
 ```python
 pdf_path = next(iter(uploaded.keys()))
 ```
 
-This uses the name of the uploaded file instead of a computer-specific file path.
+This works when you upload exactly one file. If you upload multiple files, use the exact PDF filename, for example `pdf_path = "How Reddit Works.pdf"`.
 
 **Step 5: Execute the notebook**
 
@@ -456,7 +458,7 @@ The response depends on the actual content of
 the PDF supplied to the application.
 ```
 
-**Note:** This is an illustrative interaction, not a verified answer from the example PDF.
+**Note:** This is an illustrative interaction, not an actual answer produced by running the notebook.
 
 ---
 
@@ -593,9 +595,7 @@ If you would like to extend the project:
 
 ## 📄 License
 
-This project is intended for educational and learning purposes.
-
-If you plan to distribute the project publicly, consider adding an appropriate open-source license, such as the MIT License, after confirming that the licenses of the code, models, and other included assets permit your intended use.
+No license has been specified for this repository yet. If you want others to reuse or modify the code, add a `LICENSE` file and choose a license after checking the licenses and terms for the code, models, and other assets you use.
 
 ---
 
@@ -610,5 +610,4 @@ Interested in Artificial Intelligence, Machine Learning, Large Language Models, 
 ---
 
 ⭐ If you find this project useful, consider starring the repository!
-#   B a s i c _ L L M _ R a g  
- 
+#
